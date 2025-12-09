@@ -102,6 +102,7 @@ class SimpleFirewallStudent(app_manager.RyuApp):
         # 한 줄을 직접 작성
         # --------------------------------
         # 여기에 코드 작성
+        self.mac_to_port[dpid][src] = in_port
         # --------------------------------
 
         # ==========================
@@ -113,9 +114,9 @@ class SimpleFirewallStudent(app_manager.RyuApp):
 
         # TODO: IPv4 패킷인 경우 src_ip와 dst_ip를 추출
         # --------------------------------
-        # if ip4:
-        #     src_ip = ...
-        #     dst_ip = ...
+        if ip4:
+            src_ip = ip4.src
+            dst_ip = ip4.dst
         # --------------------------------
 
         # 디버깅용 로그 출력
@@ -131,6 +132,10 @@ class SimpleFirewallStudent(app_manager.RyuApp):
         # --------------------------------
         # 여기에 코드 작성
         # --------------------------------
+        if src_ip and dst_ip and (src_ip, dst_ip) in self.block_pairs:
+            match = parser.OFPMatch(eth_type=0x0800, ipv4_src=src_ip, ipv4_dst=dst_ip)
+            self.add_flow(datapath, priority=20, match=match, actions=[])
+            return
 
         # ==========================
         # 4) 기본 포워딩 (학습 스위치 동작)
