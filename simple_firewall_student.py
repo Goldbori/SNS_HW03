@@ -120,8 +120,20 @@ class SimpleFirewallStudent(app_manager.RyuApp):
         # --------------------------------
 
         # 디버깅용 로그 출력
+        # self.logger.info(
+        #     "dpid=%s in_port=%s src=%s dst=%s src_ip=%s dst_ip=%s",
+        #     dpid, in_port, src, dst, src_ip, dst_ip
+        # )
         self.logger.info(
-            "dpid=%s in_port=%s src=%s dst=%s src_ip=%s dst_ip=%s",
+            "\n"
+            "===== Packet-In =====\n"
+            "  DPID     : %s\n"
+            "  IN_PORT  : %s\n"
+            "  SRC_MAC  : %s\n"
+            "  DST_MAC  : %s\n"
+            "  SRC_IP   : %s\n"
+            "  DST_IP   : %s\n"
+            "=====================\n",
             dpid, in_port, src, dst, src_ip, dst_ip
         )
 
