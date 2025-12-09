@@ -27,7 +27,11 @@ class SimpleFirewallStudent(app_manager.RyuApp):
         self.mac_to_port = {}
 
         # TODO: 차단할 IP 쌍을 정의할 것
-        self.block_pairs = set()
+        self.block_pairs = {
+            ("10.0.0.1", "10.0.0.2"),
+            ("10.0.0.2", "10.0.0.3"),
+            ("10.0.0.3", "10.0.0.4")
+        }
 
     def add_flow(self, datapath, priority, match, actions, buffer_id=None):
         """스위치에 flow entry를 추가하는 헬퍼 함수"""
