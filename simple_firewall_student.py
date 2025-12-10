@@ -150,6 +150,7 @@ class SimpleFirewallStudent(app_manager.RyuApp):
         # 여기에 코드 작성
         # --------------------------------
         if src_ip and dst_ip and (src_ip, dst_ip) in self.block_pairs:
+            self.logger.info(f"방화벽 정책 : {src_ip} -> {dst_ip}의 패킷은 드랍합니다.")
             match = parser.OFPMatch(eth_type=0x0800, ipv4_src=src_ip, ipv4_dst=dst_ip)
             self.add_flow(datapath, priority=20, match=match, actions=[])
             return
